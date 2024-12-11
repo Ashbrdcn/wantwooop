@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #a855f7;
+            --secondary: #facc15;
+            --dark: #111827;
+            --dark-secondary: #1f2937;
+            --gray: #374151;
+            --light-gray: #9ca3af;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin-top: 70px; /* To adjust for the fixed header */
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .section-content{
+            margin-top: 120px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-weight: bold;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .level-section h2 {
+            color: var(--secondary);
+            background-color: var(--dark-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: var(--dark-secondary);
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; /* Ensure all cards in a row have the same height */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            filter: brightness(0.8);
+            transition: filter 0.3s ease;
+        }
+
+        .card:hover img {
+            filter: brightness(1);
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .card-text {
+            color: var(--light-gray);
+        }
+
+        .mt-5 {
+            margin-top: 3rem !important;
+        }
+
+        h4 {
+            color: var(--secondary);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--gray);
+            font-size: 1.3rem;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .text-purple {
+            color: var(--primary);
+        }
+
+        .text-yellow {
+            color: var(--secondary);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: rgba(17, 24, 39, 0.95);
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                padding: 2rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+                pointer-events: none;
+            }
+
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .btn-outline {
+                display: none;
+            }
+        }
+
+
+
+
+       
+        .timer-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: var(--dark-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .timer-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .timer-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .timer-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .timer-btn:active {
+            transform: scale(0.95);
+        }
+        
+        #reset-btn {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <img src="/images/athletics.png" alt="Logo">
+                <span><span class="text-purple">Active</span><span class="text-yellow">Body</span></span>
+            </a>
+            <nav>
+                <a href="landing.html">Home</a>
+                <a href="#features">Features</a>
+                <a href="activity_level.html">Programs</a>
+                <a href="#contact">Contact</a>
+                <a href="login.html">Logout</a>
+            </nav>
+            <button class="btn btn-outline" onclick="window.location.href='activity_level.html'">Levels</button>
+            <button class="mobile-menu" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container section-content">
+        <h1 class="text-center mt-5">Beginner Level Workouts and Meal Plans</h1>
+    
+        <!-- Advance Level -->
+        <div class="level-section mt-4">
+
+
+            <!-- Beginner Workout Plan -->
+             <!-- Beginner Workout Plan -->
+<div class="workout-plan mt-5">
+    <h2>Beginner Workout Plan</h2>
+    <p class="text-muted">Follow this plan to build strength and endurance over six days, targeting all major muscle groups.</p>
+
+    <!-- Monday to Saturday Plan -->
+    <div class="row g-3">
+        <!-- Monday -->
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Monday</h5>
+                    <ul class="card-text">
+                        <li>Push-ups: 3 sets of 10–12 reps</li>
+                        <li>Bodyweight Squats: 3 sets of 15 reps</li>
+                        <li>Plank: 3 sets of 20 seconds hold</li>
+                        <li>Glute Bridges: 3 sets of 12 reps</li>
+                        <li>Bent-over Rows (with water bottles): 3 sets of 10 reps</li>
+                        <li>Arm Circles: 3 sets of 15 reps</li>
+                        <li>Wall Sit: 3 sets of 20 seconds</li>
+                        <li>Side Plank: 2 sets of 15 seconds per side</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Tuesday -->
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Tuesday</h5>
+                    <ul class="card-text">
+                        <li>Plyometric Push-ups: 3 sets of 8–10 reps</li>
+                        <li>Walking Lunges: 3 sets of 12 reps per leg</li>
+                        <li>Bicycle Crunches: 3 sets of 20 reps</li>
+                        <li>Superman Hold: 3 sets of 15 seconds</li>
+                        <li>Incline Push-ups: 3 sets of 10 reps</li>
+                        <li>Step-ups (using a sturdy surface): 3 sets of 10 reps per leg</li>
+                        <li>Mountain Climbers: 3 sets of 20 reps</li>
+                        <li>Calf Raises: 3 sets of 15 reps</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Wednesday -->
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Wednesday</h5>
+                    <ul class="card-text">
+                        <li>Chest Press: 3 sets of 10 reps</li>
+                        <li>Reverse Lunges: 3 sets of 12 reps per leg</li>
+                        <li>Plank Shoulder Taps: 3 sets of 15 reps</li>
+                        <li>Single-leg Deadlifts (using light weights): 3 sets of 10 reps per leg</li>
+                        <li>Arm Raises (front and lateral): 3 sets of 10 reps</li>
+                        <li>Russian Twists: 3 sets of 20 reps</li>
+                        <li>Bird Dog: 3 sets of 10 reps per side</li>
+                        <li>Wall Push-ups: 3 sets of 12 reps</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Thursday -->
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Thursday</h5>
+                    <ul class="card-text">
+                        <li>Incline Push-ups: 3 sets of 10 reps</li>
+                        <li>Step-ups: 3 sets of 10 reps per leg</li>
+                        <li>Bicycle Crunches: 3 sets of 15 reps</li>
+                        <li>Glute Bridges: 3 sets of 12 reps</li>
+                        <li>Side Plank: 2 sets of 15 seconds per side</li>
+                        <li>Arm Circles: 3 sets of 15 reps</li>
+                        <li>Wall Sit: 3 sets of 20 seconds</li>
+                        <li>Superman Hold: 3 sets of 15 seconds</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Friday -->
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Friday</h5>
+                    <ul class="card-text">
+                        <li>Chest Fly: 3 sets of 10 reps</li>
+                        <li>Calf Raises: 3 sets of 15 reps</li>
+                        <li>Russian Twists: 3 sets of 20 reps</li>
+                        <li>Plank Shoulder Taps: 3 sets of 15 reps</li>
+                        <li>Bent-over Rows: 3 sets of 10 reps</li>
+                        <li>Lunges: 3 sets of 12 reps per leg</li>
+                        <li>Bird Dog: 3 sets of 10 reps per side</li>
+                        <li>Mountain Climbers: 3 sets of 20 reps</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Saturday -->
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Saturday</h5>
+                    <ul class="card-text">
+                        <li>Push-ups: 3 sets of 10–12 reps</li>
+                        <li>Bulgarian Split Squats: 3 sets of 8 reps per leg</li>
+                        <li>Superman Hold: 3 sets of 15 seconds</li>
+                        <li>Incline Push-ups: 3 sets of 10 reps</li>
+                        <li>Wall Push-ups: 3 sets of 12 reps</li>
+                        <li>Side Lunges: 3 sets of 10 reps per side</li>
+                        <li>Reverse Crunches: 3 sets of 12 reps</li>
+                        <li>Bird Dog: 3 sets of 10 reps per side</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="timer-container">
+    <h2>Workout Timer</h2>
+    <div id="timer-display" class="display-4 mb-4">00:00</div>
+    <div class="timer-controls">
+        <button id="start-btn" class="timer-btn">Start</button>
+        <button id="reset-btn" class="timer-btn">Reset</button>
+        <button id="add-time-btn" class="timer-btn">+1 Min</button>
+        <button id="subtract-time-btn" class="timer-btn">-1 Min</button>
+    </div>
+</div>
+            <!-- Chest Workouts -->
+            <h4 class="mt-3">Major Workouts</h4>
+            <div class="row g-3">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/pushup.jpg" class="card-img-top" alt="Push-ups">
+                        <div class="card-body">
+                            <h5 class="card-title">Push-ups</h5>
+                            <p class="card-text">A classic upper-body exercise that strengthens the chest, shoulders, triceps, and core.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/squats.jpg" class="card-img-top" alt="Plyometric Push-ups">
+                        <div class="card-body">
+                            <h5 class="card-title">Bodyweight Squats</h5>
+                            <p class="card-text">A lower-body movement that targets the quads, hamstrings, glutes, and improves mobility.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/plank.jpg" class="card-img-top" alt="Chest Press">
+                        <div class="card-body">
+                            <h5 class="card-title">Plank</h5>
+                            <p class="card-text">A core-strengthening isometric hold that also engages the shoulders and stabilizing muscles.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/glutebridge.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Glute Bridges</h5>
+                            <p class="card-text">A hip-thrusting exercise that strengthens the glutes, hamstrings, and lower back.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/bent.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Bent-over Rows</h5>
+                            <p class="card-text">A back and arm exercise, often using weights or improvised tools, that targets the lats, traps, and biceps.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/lunges.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Lunges</h5>
+                            <p class="card-text">A versatile leg exercise that works the quads, hamstrings, glutes, and improves balance and coordination.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/bcrunches.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Bicycle Crunches</h5>
+                            <p class="card-text">A core-focused movement that engages the obliques and rectus abdominis through twisting and leg motion.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/mclimber.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Mountain Climbers</h5>
+                            <p class="card-text">A dynamic full-body exercise that increases heart rate while targeting the core, shoulders, and legs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/stwitst.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Russian Twists</h5>
+                            <p class="card-text">A rotational core exercise that strengthens the obliques and improves torso stability.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/splank.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Side Plank</h5>
+                            <p class="card-text">A lateral core exercise that targets the obliques, hips, and improves overall core stability.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/craises.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Calf Raises</h5>
+                            <p class="card-text">A lower-leg exercise that strengthens the calves and enhances ankle stability.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <img src="/images/superman.jpg" class="card-img-top" alt="Chest Fly">
+                        <div class="card-body">
+                            <h5 class="card-title">Superman Hold</h5>
+                            <p class="card-text">A prone position hold that targets the lower back, glutes, and hamstrings, improving posture and spinal stability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Meal Plan -->
+            <h4 class="mt-5">Beginner Meal Plan</h4>
+            <div class="row g-3">
+                <h3>Day 1</h3>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Breakfast</h5>
+                            <p class="card-text">Oatmeal with banana slices and a sprinkle of chia seeds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Lunch</h5>
+                            <p class="card-text">Grilled chicken salad with mixed greens, cherry tomatoes, cucumber, and olive oil-lemon dressing.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Afternoon Snack</h5>
+                            <p class="card-text">Greek yogurt topped with honey and granola.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Dinner</h5>
+                            <p class="card-text">Baked salmon with steamed broccoli, carrots, and a side of quinoa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Day 2</h3>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Breakfast</h5>
+                            <p class="card-text">Avocado toast on whole-grain bread with a boiled egg.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Lunch</h5>
+                            <p class="card-text">Turkey wrap with lettuce, tomato, and hummus in a whole-wheat tortilla.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Afternoon Snack</h5>
+                            <p class="card-text">Fresh fruit (apple or orange) with a handful of unsalted almonds.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Dinner</h5>
+                            <p class="card-text">Stir-fried chicken breast with bell peppers, snap peas, and brown rice.</p>
+                        </div>
+                    </div>
+                </div>  
+
+                <h3>Day 3</h3>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Breakfast</h5>
+                            <p class="card-text">Scrambled eggs with spinach and whole-grain toast.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Lunch</h5>
+                            <p class="card-text">Tuna salad sandwich made with whole-grain bread and a side of sliced cucumbers.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Afternoon Snack</h5>
+                            <p class="card-text">Carrot and celery sticks with hummus.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Dinner</h5>
+                            <p class="card-text">Grilled lean beef patty with sweet potato and steamed green beans.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        class WorkoutTimer {
+            constructor(displayElement) {
+                this.display = displayElement;
+                this.time = 0;
+                this.interval = null;
+                this.isRunning = false;
+            }
+        
+            start() {
+                if (!this.isRunning) {
+                    this.interval = setInterval(() => {
+                        this.time++;
+                        this.updateDisplay();
+                    }, 1000);
+                    this.isRunning = true;
+                }
+            }
+        
+            pause() {
+                if (this.isRunning) {
+                    clearInterval(this.interval);
+                    this.isRunning = false;
+                }
+            }
+        
+            reset() {
+                this.pause();
+                this.time = 0;
+                this.updateDisplay();
+            }
+        
+            addMinute() {
+                if (!this.isRunning) {
+                    this.time += 60;
+                    this.updateDisplay();
+                }
+            }
+        
+            subtractMinute() {
+                if (!this.isRunning && this.time >= 60) {
+                    this.time -= 60;
+                    this.updateDisplay();
+                }
+            }
+        
+            updateDisplay() {
+                const minutes = Math.floor(this.time / 60);
+                const seconds = this.time % 60;
+                this.display.textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const timerDisplay = document.getElementById('timer-display');
+            const timer = new WorkoutTimer(timerDisplay);
+        
+            document.getElementById('start-btn').addEventListener('click', () => 
+                timer.isRunning ? timer.pause() : timer.start());
+            document.getElementById('reset-btn').addEventListener('click', () => timer.reset());
+            document.getElementById('add-time-btn').addEventListener('click', () => timer.addMinute());
+            document.getElementById('subtract-time-btn').addEventListener('click', () => timer.subtractMinute());
+        });
+    </script>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+
+        mobileMenuButton.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'login.html'; // Redirect to login.html
+                } else {
+                    console.error('Logout failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

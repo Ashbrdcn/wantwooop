@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActiveBody - Fitness Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+    --primary: #a855f7;
+    --secondary: #facc15;
+    --dark: #111827;
+    --dark-secondary: #1f2937;
+    --gray: #374151;
+    --light-gray: #9ca3af;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: white;
+    background: linear-gradient(135deg, var(--dark), var(--dark-secondary));
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Header Styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gray);
+    padding: 1rem 0;
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+header.scrolled {
+    padding: 0.5rem 0;
+    background: rgba(17, 24, 39, 0.98);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: white;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    transition: var(--transition);
+}
+
+header.scrolled .logo img {
+    width: 32px;
+    height: 32px;
+}
+
+.logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.text-purple { color: var(--primary); }
+.text-yellow { color: var(--secondary); }
+
+nav {
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: var(--transition);
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: white;
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+.mobile-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    padding: 8rem 0 5rem;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9)), url('/api/placeholder/1920/1080') center/cover;
+}
+
+.hero-content {
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2.5rem;
+    color: var(--light-gray);
+}
+
+/* Features Section */
+.features {
+    padding: 6rem 0;
+    background: var(--dark-secondary);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.grid-3 {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.feature-card {
+    background: var(--dark);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: var(--transition);
+    border: 1px solid var(--gray);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary);
+}
+
+.icon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+}
+
+/* Programs Section */
+.programs {
+    padding: 6rem 0;
+    background: var(--dark);
+}
+
+.tabs {
+    margin-top: 3rem;
+}
+
+.tabs-list {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.tab-trigger {
+    padding: 1rem 2rem;
+    background: var(--gray);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 0.5rem;
+    font-weight: 500;
+}
+
+.tab-trigger.active {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+.tab-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: var(--transition);
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mobile-menu {
+        display: block;
+    }
+
+    nav {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--dark);
+        padding: 2rem;
+        flex-direction: column;
+        align-items: center;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: var(--transition);
+        pointer-events: none;
+    }
+
+    nav.active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .tabs-list {
+        flex-direction: column;
+    }
+
+    .btn-outline {
+        display: none;
+    }
+}
+
+.contact {
+    padding: 6rem 0;
+    background: var(--dark-secondary);
+    color: white;
+    text-align: center;
+}
+
+.contact-info {
+    line-height: 1.8;
+    margin-top: 2rem;
+}
+
+.contact-info a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <img src="/images/athletics.png" alt="ActiveBody Logo">
+                <span><span class="text-purple">Active</span><span class="text-yellow">Body</span></span>
+            </a>
+            <nav>
+                <a href="landing.html">Home</a>
+                <a href="#features">Features</a>
+                <a href="#programs">Programs</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button class="btn btn-outline" onclick="window.location.href='signup.html'">Join Now</button>
+            <button class="mobile-menu" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Elevate Your <span class="text-purple">Fitness Journey</span></h1>
+                    <p>Transform your life with personalized workouts, expert guidance, and a supportive community dedicated to helping you achieve your fitness goals.</p>
+                    <button class="btn btn-primary" onclick="navigateToLogin()">
+                        Join Free Today
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14m-7-7l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                    
+                    <script>
+                    function navigateToLogin() {
+                        window.location.href = 'login.html'; // Replace with the actual login route
+                    }
+                    </script>
+                    
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Why Choose <span class="text-purple">ActiveBody</span></h2>
+                </div>
+                <div class="grid-3">
+                    <div class="feature-card">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        </svg>
+                        <h3>Personalized Programs</h3>
+                        <p>Customized workout plans tailored to your specific goals, fitness level, and preferences.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
+                        </svg>
+                        <h3>Expert Trainers</h3>
+                        <p>Learn from certified fitness professionals who guide you every step of the way.</p>
+                    </div>
+                    <div class="feature-card">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 20v-6M6 20V10M18 20V4"></path>
+                        </svg>
+                        <h3>Progress Tracking</h3>
+                        <p>Track your workouts, measure progress, and celebrate your fitness milestones.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="programs" class="programs">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our <span class="text-purple">Programs</span></h2>
+                </div>
+                <div class="tabs">
+                    <div class="tabs-list">
+                        <button class="tab-trigger active" data-tab="beginner">Beginner</button>
+                        <button class="tab-trigger" data-tab="intermediate">Intermediate</button>
+                        <button class="tab-trigger" data-tab="advanced">Advanced</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="beginner">
+                        <div class="grid-3">
+                            <div class="feature-card">
+                                <h3>Foundation Program</h3>
+                                <p>Perfect for those just starting their fitness journey. Learn proper form and build basic strength.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>Cardio Kickstart</h3>
+                                <p>Build endurance and improve cardiovascular health with guided cardio workouts.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>Flexibility Basics</h3>
+                                <p>Enhance your mobility and prevent injury with fundamental stretching routines.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="intermediate">
+                        <div class="grid-3">
+                            <div class="feature-card">
+                                <h3>Strength Builder</h3>
+                                <p>Take your training to the next level with progressive overload and compound movements.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>HIIT Excellence</h3>
+                                <p>Intensive interval training programs designed to maximize fat burn and muscle retention.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>Core Power</h3>
+                                <p>Advanced core strengthening exercises for improved stability and performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="advanced">
+                        <div class="grid-3">
+                            <div class="feature-card">
+                                <h3>Elite Performance</h3>
+                                <p>Advanced training protocols designed for experienced athletes seeking peak performance.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>Power & Explosiveness</h3>
+                                <p>Specialized routines focusing on explosive strength and power development.</p>
+                            </div>
+                            <div class="feature-card">
+                                <h3>Athletic Conditioning</h3>
+                                <p>High-level conditioning programs for athletes looking to maximize their competitive edge.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </section>
+                </main>
+                <section id="contact" class="contact">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>Get in <span class="text-purple">Touch</span></h2>
+                            <p>Have questions or need assistance? We're here to help!</p>
+                        </div>
+                        <div class="contact-info">
+                            <h3>Contact Information</h3>
+                            <p>Email: <a href="mailto:support@activebody.com">support@activebody.com</a></p>
+                            <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+                            <p>Address: 123 Fitness Lane, Workout City, Health State</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <script>
+                    // Header scroll effect
+                    const header = document.querySelector('header');
+                    window.addEventListener('scroll', () => {
+                        if (window.scrollY > 100) {
+                            header.classList.add('scrolled');
+                        } else {
+                            header.classList.remove('scrolled');
+                        }
+                    });
+                
+                    // Mobile menu
+                    const mobileMenuButton = document.querySelector('.mobile-menu');
+                    const nav = document.querySelector('nav');
+                    
+                    mobileMenuButton.addEventListener('click', () => {
+                        nav.classList.toggle('active');
+                    });
+                
+                    // Close mobile menu when clicking a link
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            nav.classList.remove('active');
+                        });
+                    });
+                
+                    // Tabs functionality
+                    const tabTriggers = document.querySelectorAll('.tab-trigger');
+                    const tabContents = document.querySelectorAll('.tab-content');
+                
+                    tabTriggers.forEach(trigger => {
+                        trigger.addEventListener('click', () => {
+                            // Remove active class from all triggers and contents
+                            tabTriggers.forEach(t => t.classList.remove('active'));
+                            tabContents.forEach(c => c.classList.remove('active'));
+                
+                            // Add active class to clicked trigger and corresponding content
+                            trigger.classList.add('active');
+                            const targetTab = trigger.getAttribute('data-tab');
+                            document.getElementById(targetTab).classList.add('active');
+                        });
+                    });
+                
+                    // Smooth scrolling for anchor links
+                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                        anchor.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            const targetId = this.getAttribute('href');
+                            const targetElement = document.querySelector(targetId);
+                            
+                            if (targetElement) {
+                                const headerHeight = document.querySelector('header').offsetHeight;
+                                const targetPosition = targetElement.offsetTop - headerHeight;
+                                
+                                window.scrollTo({
+                                    top: targetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        });
+                    });
+                </script>
+                </body>
+                </html>
